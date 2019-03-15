@@ -222,10 +222,24 @@ int main() {
 
 - `mkdir(direktorifile, 0777);` membuat direktori  sesuai isi direktorifile.
 
-- ```for(int a=1; a<30; a++){
+- ```
+  for(int a=1; a<30; a++){
             ...
-             sleep(60);
+       sleep(60);
   }
   ```
+ dijalankan 30 kali dengan waktu tunggu 60 detik, karena mintanya per menit.
+ 
+ - `lama = fopen("/var/log/syslog", "r");` membuka file syslog read saja.
+ 
+ - `sprintf(nama_file, "/home/lutfiy/modul2/hasil5/%s/log%d.log", perwaktu, a);` menyimpan nama direktori dan file dengan s adalah nama        folder berdasarkan waktu dan a adalah nama tambahan yg di increament.
+ 
+ - `baru = fopen(nama_file, "w");` membuat file dengan write isinya ke file baru.
+ 
+ - ```
+    while(fscanf(lama, "%c", &karakter) != EOF)
+    {fprintf(baru, "%c", karakter);}
+   ```
+ scanf isi file syslognya sampai end of file kemudian karakternya dicetak di file baru.
   
   
