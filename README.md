@@ -240,7 +240,38 @@ int main() {
 
 
 # Soal 4 :
+```
+while(1) {
+    	struct stat att;
+    	stat("/home/reyhanzo/modul2/makanan/makan_enak.txt", &att);
+	time_t access = att.st_atime;	
+	time_t now = time(NULL);
+	double det = difftime(now, access);
+	char number[10000];
+	sprintf(number,"%d", i);
+	char namefile[]="/home/reyhanzo/modul2/makanan/makan_sehat";
 
+	if(det<=30)
+	{
+		FILE* makan;
+		strcat(namefile, number);
+      		strcat(namefile,".txt"); 
+		makan = fopen(namefile, "w+"); 
+      		fclose(makan);
+      		i++;
+	}
+    sleep(5);
+  }
+```
+### Penjelasan :
+1. kita perlu struct file yg berisi path menuju file makan_enak.txt, misalkan namanya att (atribut)
+2. disini juga perlu mengukur waktu karena diminta membuat file makan_sehat setiap 5 detik dengan range 30 detik, maka perlu memberi program access dan now
+  a. access sebagai waktu akses
+  b. now sebagai waktu ketika program berjalan
+3. lalu dibuat range diantara access dan now
+4. jika sudah dibuat rangenya, kita disuruh membuat file bernama makan_sehat(angka 1- dst).txt yg digunakan sebagai pengingat
+5. dan jangan lupa dibuat urut filenya
+6. lalu kita fopen untuk file makan_sehat yg kita buat, baru close
 
    
  # Soal 5
