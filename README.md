@@ -222,10 +222,10 @@ int main() {
 
 - `mkdir(direktorifile, 0777);` membuat direktori  sesuai isi direktorifile.
 
-- for(int a=1; a<30; a++){
+- ```for(int a=1; a<30; a++){
             ...
              sleep(60);
   }
-  
+  ```
   
   
