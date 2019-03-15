@@ -185,14 +185,13 @@ int main() {
         char direktorifile[100];
         char perwaktu[100];
         sprintf(perwaktu, "%d:%d:%d-%d:%d", waktu->tm_mday, waktu->tm_mon+1, waktu->tm_year+1900, waktu->tm_hour, waktu->tm_min);
-        printf("%s", perwaktu);
         sprintf(direktorifile, "/home/lutfiy/modul2/hasil5/%s", perwaktu);
         mkdir(direktorifile, 0777); //777 biar bisa akses semua
-        for(int i=1; i<30; i++){
+        for(int a=1; a<30; a++){
                 FILE *lama, *baru;
                 lama = fopen("/var/log/syslog", "r");
                 char nama_file[100];
-                sprintf(nama_file, "/home/lutfiy/modul2/hasil5/%s/log%d.log", perwaktu, i);
+                sprintf(nama_file, "/home/lutfiy/modul2/hasil5/%s/log%d.log", perwaktu, a);
                 baru = fopen(nama_file, "w");
                 //pindah seluruh isi file ke log$#.log
                 char karakter;
@@ -217,5 +216,16 @@ int main() {
   `waktu = localtime(&waktu_sekarang);`
   Kemudian membuat `struct tm` dengan nama `waktu` menggunakan struct untuk memecah waktu.
   
-- `sprintf(perwaktu, "%d:%d:%d-%d:%d", waktu->tm_mday, waktu->tm_mon+1, waktu->tm_year+1900, waktu->tm_hour, waktu->tm_min);`
-  `
+- `sprintf(perwaktu, "%d:%d:%d-%d:%d", waktu->tm_mday, waktu->tm_mon+1, waktu->tm_year+1900, waktu->tm_hour, waktu->tm_min);` memasukan            format waktu `"%d:%d:%d-%d:%d"` ke dalam `perwaktu`.
+
+- `sprintf(direktorifile, "/home/lutfiy/modul2/hasil5/%s", perwaktu);` menyimpan nama direktori + filenya di `direktorifile`.
+
+- `mkdir(direktorifile, 0777);` membuat direktori  sesuai isi direktorifile.
+
+- for(int a=1; a<30; a++){
+            ...
+             sleep(60);
+  }
+  
+  
+  
