@@ -147,6 +147,16 @@ int main() {
 6. lalu pasang daemon agar dapat dijalankan setiap 3 detik dari awal dijalankan kode tersebut. 
 
 # Soal 3
+Diberikan file campur2.zip. Di dalam file tersebut terdapat folder “campur2”. 
+Buatlah program C yang dapat :
+i)  mengekstrak file zip tersebut.
+ii) menyimpan daftar file dari folder “campur2” yang memiliki ekstensi .txt ke dalam file daftar.txt. 
+Catatan:  
+Gunakan fork dan exec.
+Gunakan minimal 3 proses yang diakhiri dengan exec.
+Gunakan pipe
+Pastikan file daftar.txt dapat diakses dari text editor
+
 
 ```
 
@@ -209,8 +219,26 @@ int main() {
         }
         return 0;
 }
-
 ```
+- `char *unzip[] = {"unzip", "/home/ltfiy/modul2/soal3/campur2.zip", NULL};` Untuk mengunzip file campur2.
+- `char *ls[] = {"ls", "/home/lutfiy/modul2/campur2", NULL};` untuk mengecek semua file didalam folder campur 2
+- `char *grep[] = {"grep", ".txt$", NULL};` untuk mencari file .txt.
+- `pid1 = fork();` membuat fork untuk pid1.
+- `if (pid1 < 0) exit(EXIT_FAILURE);`jika kurang dr 0 berarti bukan childnya.
+- `if (pid1 == 0)` jika = 0 maka dia adalah childnya. 
+                `execvp("unzip", unzip);` setelah itu file di unzip.
+                
+- ```          
+      if(pid2 == 0){
+             dup2(pipe1[1], STDOUT_FILENO); 
+             close(pipe1[1]); 
+             close(pipe1[0]); 
+             execvp("ls", ls);
+  ```
+  
+ 
+
+
 # Soal 4 :
 
 
