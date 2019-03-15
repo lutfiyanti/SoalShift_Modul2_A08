@@ -119,7 +119,36 @@ int main() {
    `execv("/bin/mv", argv);`
    memindahkan file dari variabel lama ke file_baru. 
    
-   
+ # Soal 2
+ ```
+  while(1) {
+    chdir("/home/reyhanzo/hatiku");
+  struct stat awo;
+  stat("/home/reyhanzo/hatiku/elen.ku", &awo);
+  struct passwd *weh = getpwuid(awo.st_uid);
+  struct group *hew = getgrgid(awo.st_gid);
+  int ret;
+
+  if(strcmp(weh->pw_name, "www-data") == 0 && strcmp(hew->gr_name, "www-data") == 0) {
+      remove("/home/reyhanzo/hatiku/elen.ku");
+}
+  ``` 
+  ### Penjelasan :
+  1. ubah directory ke folder hatiku
+  
+2. lalu kita pakai stat untuk mengarahkan ke path folder, misalkan namanya awo
+
+3. ada owner, yaitu user(kita). kita harus mencari password user, dengan melakukan getpwuid("path", st_uid)
+
+4. ada group, kita juga harus mencari group denagn melakukan getgrgid("path", st_gid)
+
+5. lalu kita compare dari owner dan group tersebut dengan www-data, jika keduanya memiliki ukuran string yg sama dengan www-data, maka kita remove file elen.ku
+
+6. lalu pasang daemon agar dapat dijalankan setiap 3 detik dari awal dijalankan kode tersebut. 
+
+# Soal 4 :
+
+
    
  # Soal 5
  
