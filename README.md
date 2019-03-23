@@ -119,6 +119,19 @@ int main() {
    `execv("/bin/mv", argv);`
    memindahkan file dari variabel lama ke file_baru. 
    
+   Berikut adalah file di Documents dengan ekstensi .png yang nantinya akan dipindahkan ke home/lutfiy/modul2/gambar. Dengan ditambah _grey.png
+   
+   ![gambar 1](https://github.com/lutfiyanti/SoalShift_Modul2_A08/blob/master/1%20isi%20Document.png)
+   
+   
+   
+   Setelah itu file soal1.c di bash dan cek direktori gambar di dalam direktori modul2
+   
+    ![gambar 2](https://github.com/lutfiyanti/SoalShift_Modul2_A08/blob/master/1%20Bash%20dan%20Hasil.png)
+    
+    seluruh file di Documents dipindah ke direktori home/lutfiy/modul2/gambar. Dengan ditambah _grey.png
+    
+   
  # Soal 2
  Pada suatu hari Kusuma dicampakkan oleh Elen karena Elen dimenangkan oleh orang lain. Semua kenangan tentang Elen berada pada file bernama “elen.ku” pada direktori “hatiku”. Karena sedih berkepanjangan, tugas kalian sebagai teman Kusuma adalah membantunya untuk menghapus semua kenangan tentang Elen dengan membuat program C yang bisa mendeteksi owner dan group dan menghapus file “elen.ku” setiap 3 detik dengan syarat ketika owner dan grupnya menjadi “www-data”. Ternyata kamu memiliki kendala karena permission pada file “elen.ku”. Jadi, ubahlah permissionnya menjadi 777. Setelah kenangan tentang Elen terhapus, maka Kusuma bisa move on.
 Catatan: Tidak boleh menggunakan crontab
@@ -410,6 +423,14 @@ int main() {
     {fprintf(baru, "%c", karakter);}
    ```
  scanf isi file syslognya sampai end of file kemudian karakternya dicetak di file baru.
+ 
+ Setelah program soal5.c di bash maka akan terbuat direktori dengan namanya adalah timestamp. Direktori ini dibuat setiap 30 menit sekali. Dimana menit pertama akan membuat direktori terlebih dahulu.
+ 
+ ![Gambar 6](https://github.com/lutfiyanti/SoalShift_Modul2_A08/blob/master/5%20direktori.png)
+ 
+ Setelah membuat direktori menit berikutnya dengan jeda waktu setiap 1 menit akan membuat file didalam direktori tersebut. Nama file adalah log%d.log dimana %d adalah angka 1-29 tergantung dimenit ke-berapa dibuatnya. Counter. 
+ 
+ ![Gambar 7](https://github.com/lutfiyanti/SoalShift_Modul2_A08/blob/master/5%20file.png)
   
   
 #### Kill Proses 
