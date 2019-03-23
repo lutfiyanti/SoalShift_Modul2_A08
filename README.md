@@ -155,13 +155,21 @@ Catatan: Tidak boleh menggunakan crontab
   
 2. lalu kita pakai stat untuk mengarahkan ke path folder, misalkan namanya awo
 
-3. ada owner, yaitu user(kita). kita harus mencari password user, dengan melakukan getpwuid("path", st_uid)
+3. ada owner, yaitu user(kita). kita harus mencari password user, dengan melakukan `getpwuid("path", st_uid)`
 
-4. ada group, kita juga harus mencari group denagn melakukan getgrgid("path", st_gid)
+4. ada group, kita juga harus mencari group denagn melakukan `getgrgid("path", st_gid)`
 
 5. lalu kita compare dari owner dan group tersebut dengan www-data, jika keduanya memiliki ukuran string yg sama dengan www-data, maka kita remove file elen.ku
 
 6. lalu pasang daemon agar dapat dijalankan setiap 3 detik dari awal dijalankan kode tersebut. 
+
+7. Sebelum dijalankan, file tersebut perlu di permission dengan menggunakan command `sudo chown www-data:www-data elen.ku`
+
+![g2.1](https://github.com/lutfiyanti/SoalShift_Modul2_A08/blob/master/2.1.png)
+
+8. Lalu dijankan code tersebut, setelah dijalankan maka file yg sudah di permission tersebut hilang dari folder hatiku
+
+![g2.2](https://github.com/lutfiyanti/SoalShift_Modul2_A08/blob/master/2.2.png)
 
 # Soal 3
 Diberikan file campur2.zip. Di dalam file tersebut terdapat folder “campur2”. 
@@ -405,8 +413,10 @@ while(1) {
 4. jika sudah dibuat rangenya, kita disuruh membuat file bernama makan_sehat(angka 1- dst).txt yg digunakan sebagai pengingat
 5. dan jangan lupa dibuat urut filenya
 6. lalu kita fopen untuk file makan_sehat yg kita buat, baru close
+7. lalu jalankan code tersebut, setelah dijalankan maka akan muncul file `makan_sehat(angka).txt` sebanyak 6 kali (karena setiap file akan muncul setiap 5 detik dalam waktu 30 detik)
 
-   
+![G4](https://github.com/lutfiyanti/SoalShift_Modul2_A08/blob/master/4.png)
+
  # Soal 5
  
 Kerjakan poin a dan b di bawah:
