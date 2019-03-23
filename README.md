@@ -179,6 +179,9 @@ Pastikan file daftar.txt dapat diakses dari text editor
 
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/wait.h>
+#include <sys/dir.h>
+#include <dirent.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>
@@ -186,74 +189,161 @@ Pastikan file daftar.txt dapat diakses dari text editor
 #include <unistd.h>
 #include <syslog.h>
 #include <string.h>
-
 int main() {
-        pid_t pid1, pid2, pid3;
-        int pipe1[2], pipe2[2];
-        int p1;
-        pipe(pipe1);
-        pipe(pipe2);
-        char *unzip[] = {"unzip", "/home/ltfiy/modul2/soal3/campur2.zip", NULL};
-        char *ls[] = {"ls", "/home/lutfiy/modul2/campur2", NULL};
-        char *grep[] = {"grep", ".txt$", NULL};
+        pid_t child_id1, child_id2, child_id3;
+        int pipeEnds1[2], pipeEnds2[2];
+
+        pipe(pipeEnds1);
+        pipe(pipeEnds2);
+
         // Process1
-        pid1 = fork();
+        child_id1 = fork();
 
-        if (pid1 < 0) exit(EXIT_FAILURE);
+        if (child_id1 < 0) exit(EXIT_FAILURE);
 
-        if (pid1 == 0) 
-                execvp("unzip", unzip);
+        if (child_id1 == 0) {
+                char *zip[] = {"unzip", "/home/lutfiy/modul2/soal3/campur2.zip", NULL};
+                execvp(zip[0], zip);
         } else {
-                int p2;
-                while(wait(&p1) > 0); //wait until Process1 end
+                while(wait(NULL) > 0); //wait until Process1 end
 
                 // Process2
-                pid2 = fork();
+                child_id2 = fork();
 
-                if (pid2 < 0) exit(EXIT_FAILURE);
+                if (child_id2 < 0) exit(EXIT_FAILURE);
 
-                if(pid2 == 0){
-                        dup2(pipe1[1], STDOUT_FILENO); // connect pipeEnds1 Write to STDOUT Process2
-                        close(pipe1[1]); // close pipeEnds1 Write that connected to File Table 4
-                        close(pipe1[0]); // close pipeEnds1 Read that connected to File Table  4
-                        execvp("ls", ls);
+                if(child_id2 == 0){
+                        dup2(pipeEnds1[1], STDOUT_FILENO); // connect pipeEnds1 Write to STDOUT Process2
+                        close(pipeEnds1[1]); // close pipeEnds1 Write that connected to File Table 4
+                        close(pipeEnds1[0]); // close pipeEnds1 Read that connected to File Table 3
+
+                        char *ls[] = {"ls", "/home/lutfiy/modul2/campur2", NULL};
+                        execvp(ls[0], ls);
                 }
                 else{
-                        while(wait(p2) > 0); //wait until Process2 end
+                        while(wait(NULL) > 0); //wait until Process2 end
 
                         // Process3
                         child_id3 = fork();
 
-                        if (pid3 < 0) exit(EXIT_FAILURE);
+                        if (child_id3 < 0) exit(EXIT_FAILURE);
 
-                        if(pid3 == 0){
-                                execvp("grep", grep);
+                        if(child_id3 == 0){
+                                dup2(pipeEnds1[0], STDIN_FILENO); // connect pipeEnds1 Read to STDIN Process3
+                                dup2(pipeEnds2[1], STDOUT_FILENO); // connect pipeEnds2 Write to STDOUT Process3
+                                close(pipeEnds2[0]);
+                                close(pipeEnds2[1]);
+                                close(pipeEnds1[0]);
+                                close(pipeEnds1[1]);
+
+                                char *grep[] = {"grep", ".txt$", NULL};
+                                execvp(grep[0], grep);
                         }
                         else{
 
+                                char hasil[1000];
+                                close(pipeEnds2[1]);
+                                close(pipeEnds1[0]);
+                                close(pipeEnds1[1]);
+                                read(pipeEnds2[0], hasil, sizeof(hasil));
+
+                                FILE *f1 = fopen("/home/lutfiy/modul2/soal3/daftar.txt", "w+");
+                                fputs(hasil, f1);
+                                fclose(f1);
                         }
+
                 }
+
         }
+
         return 0;
 }
+
 ```
-- `char *unzip[] = {"unzip", "/home/ltfiy/modul2/soal3/campur2.zip", NULL};` Untuk mengunzip file campur2.
-- `char *ls[] = {"ls", "/home/lutfiy/modul2/campur2", NULL};` untuk mengecek semua file didalam folder campur 2
-- `char *grep[] = {"grep", ".txt$", NULL};` untuk mencari file .txt.
-- `pid1 = fork();` membuat fork untuk pid1.
-- `if (pid1 < 0) exit(EXIT_FAILURE);`jika kurang dr 0 berarti bukan childnya.
-- `if (pid1 == 0)` jika = 0 maka dia adalah childnya. 
-                `execvp("unzip", unzip);` setelah itu file di unzip.
-                
-- ```          
-      if(pid2 == 0){
-             dup2(pipe1[1], STDOUT_FILENO); 
-             close(pipe1[1]); 
-             close(pipe1[0]); 
-             execvp("ls", ls);
-  ```
-  
+
+- Dilakukan deklarasi awal untuk Pipe dikarenakan dibutuhkan hasil proses yang di gunakan oleh proses lain
+
+```
+        pid_t child_id1, child_id2, child_id3;
+        int pipeEnds1[2], pipeEnds2[2];
+
+        pipe(pipeEnds1);
+        pipe(pipeEnds2);
+```
+
+- Lakukan `fork()` untuk proses pertama yaitu mengekstrak zip.
+
+```
+        child_id1 = fork();
+
+        if (child_id1 < 0) exit(EXIT_FAILURE);
+
+        if (child_id1 == 0) {
+                char *zip[] = {"unzip", "/home/lutfiy/modul2/soal3/campur2.zip", NULL};
+                execvp(zip[0], zip);
+
+```
+
+- Lakukan `fork()` untuk proses kedua yaitu mengambil nama dari folder hasil unzip. Namun diperlukan menunggu proses pertama selesai terlebuh dahulu sehingga di gunakan `while(wait(NULL) > 0);`
+
+```
+                while(wait(NULL) > 0); //wait until Process1 end
+
+                // Process2
+                child_id2 = fork();
+
+                if (child_id2 < 0) exit(EXIT_FAILURE);
+
+                if(child_id2 == 0){
+                        dup2(pipeEnds1[1], STDOUT_FILENO); // connect pipeEnds1 Write to STDOUT Process2
+                        close(pipeEnds1[1]); // close pipeEnds1 Write that connected to File Table 4
+                        close(pipeEnds1[0]); // close pipeEnds1 Read that connected to File Table 3
+
+                        char *ls[] = {"ls", "/home/lutfiy/modul2/campur2", NULL};
+                        execvp(ls[0], ls);
+```
+
+- Dibutuhkan melakukan pipe dikarenakan dibutuhkan ouput dari proses ini yang akan digunakan untuk Proses selanjutnya. Maka kita perlu menghubungkan STDOUT dari proses ini kepada pipe bagian write Menggunakan seperti dibawah ini :
+```
+dup2(pipeEnds1[1], STDOUT_FILENO);
+```
+
+-Lalu dilakukan penutupan pada semua jalur default dari Pipe
+```
+close(pipeEnds1[1]); 
+close(pipeEnds1[0]); 
+```
  
+- Lakukan `fork()` untuk proses ketiga yaitu mengambil nama dari folder hasil unzip. Namun diperlukan menunggu proses pertama selesai terlebuh dahulu sehingga di gunakan `while(wait(NULL) > 0);`
+```
+                        child_id3 = fork();
+
+                        if (child_id3 < 0) exit(EXIT_FAILURE);
+
+                        if(child_id3 == 0){
+                                dup2(pipeEnds1[0], STDIN_FILENO); // connect pipeEnds1 Read to STDIN Process3
+                                dup2(pipeEnds2[1], STDOUT_FILENO); // connect pipeEnds2 Write to STDOUT Process3
+                                close(pipeEnds2[0]);
+                                close(pipeEnds2[1]);
+                                close(pipeEnds1[0]);
+                                close(pipeEnds1[1]);
+
+                                char *grep[] = {"grep", ".txt$", NULL};
+                                execvp(grep[0], grep);
+```
+
+- Dibutuhkan inputan dari proses sebelummya sehingga dibutuhkan menghubungkan `STDIN` ke `pipe1` bagian `read` dan dibutuhkan melakukan `pipe` dikarenakan dibutuhkan ouput dari proses ini yang akan digunakan untuk Proses selanjutnya. Maka kita perlu menghubungkan `STDOUT` dari proses ini kepada `pipe2` bagian `write` Menggunakan seperti dibawah ini :
+```
+dup2(pipeEnds1[0], STDIN_FILENO);
+dup2(pipeEnds2[1], STDOUT_FILENO);
+```
+Lalu dilakukan penutupan pada semua jalur default dari Pipe. Seperti dibawah ini :
+```
+close(pipeEnds2[0]); 
+close(pipeEnds2[1]);
+close(pipeEnds1[0]);
+close(pipeEnds1[1]);
+```
 
 
 # Soal 4 :
