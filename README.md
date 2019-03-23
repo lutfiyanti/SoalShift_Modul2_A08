@@ -415,7 +415,7 @@ while(1) {
 6. lalu kita fopen untuk file makan_sehat yg kita buat, baru close
 7. lalu jalankan code tersebut, setelah dijalankan maka akan muncul file `makan_sehat(angka).txt` sebanyak 6 kali (karena setiap file akan muncul setiap 5 detik dalam waktu 30 detik)
 
-![G4](https://github.com/lutfiyanti/SoalShift_Modul2_A08/blob/master/4.PNG)
+![G4](https://github.com/lutfiyanti/SoalShift_Modul2_A08/blob/master/4.1.PNG)
 
  # Soal 5
  
