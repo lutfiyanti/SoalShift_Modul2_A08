@@ -345,6 +345,20 @@ close(pipeEnds1[0]);
 close(pipeEnds1[1]);
 ```
 
+Bash soal3.c
+
+![Gambar 3](https://github.com/lutfiyanti/SoalShift_Modul2_A08/blob/master/3.%20Bash.png)
+
+
+
+Hasil unzip di simpan di direktori campur2
+
+![gambar 4](https://github.com/lutfiyanti/SoalShift_Modul2_A08/blob/master/3%20Isi%20Campur%202.png)
+
+Kemudian file dengan extensi .txt akan di list didalam file daftar.txt
+
+![gambar 5](https://github.com/lutfiyanti/SoalShift_Modul2_A08/blob/master/3%20Daftar.png)
+
 
 # Soal 4 :
 Dalam direktori /home/[user]/Documents/makanan terdapat file makan_enak.txt yang berisikan daftar makanan terkenal di Surabaya. Elen sedang melakukan diet dan seringkali tergiur untuk membaca isi makan_enak.txt karena ngidam makanan enak. Sebagai teman yang baik, Anda membantu Elen dengan membuat program C yang berjalan setiap 5 detik untuk memeriksa apakah file makan_enak.txt pernah dibuka setidaknya 30 detik yang lalu (rentang 0 - 30 detik).
