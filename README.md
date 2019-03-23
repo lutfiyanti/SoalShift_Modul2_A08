@@ -165,11 +165,11 @@ Catatan: Tidak boleh menggunakan crontab
 
 7. Sebelum dijalankan, file tersebut perlu di permission dengan menggunakan command `sudo chown www-data:www-data elen.ku`
 
-![g2.1](https://github.com/lutfiyanti/SoalShift_Modul2_A08/blob/master/2.1.png)
+![g2.1](https://github.com/lutfiyanti/SoalShift_Modul2_A08/blob/master/2.1.PNG)
 
 8. Lalu dijankan code tersebut, setelah dijalankan maka file yg sudah di permission tersebut hilang dari folder hatiku
 
-![g2.2](https://github.com/lutfiyanti/SoalShift_Modul2_A08/blob/master/2.2.png)
+![g2.2](https://github.com/lutfiyanti/SoalShift_Modul2_A08/blob/master/2.2.PNG)
 
 # Soal 3
 Diberikan file campur2.zip. Di dalam file tersebut terdapat folder “campur2”. 
@@ -415,7 +415,7 @@ while(1) {
 6. lalu kita fopen untuk file makan_sehat yg kita buat, baru close
 7. lalu jalankan code tersebut, setelah dijalankan maka akan muncul file `makan_sehat(angka).txt` sebanyak 6 kali (karena setiap file akan muncul setiap 5 detik dalam waktu 30 detik)
 
-![G4](https://github.com/lutfiyanti/SoalShift_Modul2_A08/blob/master/4.png)
+![G4](https://github.com/lutfiyanti/SoalShift_Modul2_A08/blob/master/4.PNG)
 
  # Soal 5
  
